@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fanfan.bodyguard"
+    android:versionCode="2"
+    android:versionName="1.2" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="21" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="ndroid.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="com.fanfan.bodyguard.MyApp"
+        android:allowBackup="true"
+        android:icon="@drawable/sos_icon"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Tb4c7kLOgISXv1KGcA4xKVGY" />
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fanfan.bodyguard.SettingActivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.BaseActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.ShowContactsActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.EditMessageActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.AddtimeActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.SetGesureLockActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.SupportOurActivity" >
+        </activity>
+        <activity android:name="com.fanfan.bodyguard.AboutMeActivity" >
+        </activity>
+
+        <receiver
+            android:name="com.fanfan.backgroundService.MystartReceiver"
+            android:exported="true" >
+            <intent-filter android:priority="2147483647" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.fanfan.action.ServiceSend"/>
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.fanfan.backgroundService.MyAlarmReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.fanfan.actionAlarmsend" />
+                <action android:name="com.fanfan.action.appRemoved" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.fanfan.backgroundService.ListenService" >
+        </service>
+        <service android:name="com.fanfan.backgroundService.MusicPlayService" >
+        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+    </application>
+
+</manifest>

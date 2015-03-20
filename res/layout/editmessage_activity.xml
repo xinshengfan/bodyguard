@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F6F6"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/top" >
+
+        <ImageButton
+            android:id="@+id/editmessage_imb_leftmenu"
+            style="@style/ReturnBack_Button_Style"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/bt_savemessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_item_hellow"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="@string/str_btn_save"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_message"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_background"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:maxLength="140"
+            android:padding="3dip"
+            android:text="@string/message"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_messageLength"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dip"
+            android:layout_marginRight="8dp"
+            android:gravity="right"
+            android:text="0/1"
+            android:textColor="@drawable/fanfan_gray" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_hint_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:drawableTop="@drawable/creat_activity_press"
+        android:gravity="center_horizontal"
+        android:onClick="onClick"
+        android:text="@string/reminder_add_time"
+        android:textColor="@color/btn_music_pressed"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/lv_alarm_times"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1.0"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:visibility="gone" />
+
+</LinearLayout>

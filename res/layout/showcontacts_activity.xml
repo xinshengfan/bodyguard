@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:clickable="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout style="@style/top" >
+
+            <ImageButton
+                android:id="@+id/showcontact_imb_leftmenu"
+                style="@style/ReturnBack_Button_Style"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:onClick="onClick" />
+
+            <TextView
+                style="@style/TitleStyle"
+                android:text="@string/str_set_title" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listView_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:visibility="visible" >
+        </ListView>
+
+        <RelativeLayout
+            android:id="@+id/rela_toast"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#A0eeeeee" >
+
+            <Button
+                android:id="@+id/bt_cancelselected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="left"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_sava"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:text="@string/btn_cancelselect"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_sava"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:text="@string/btn_save"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar_showcontacts"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/dialog_imag_color"
+        android:visibility="visible" />
+
+</FrameLayout>

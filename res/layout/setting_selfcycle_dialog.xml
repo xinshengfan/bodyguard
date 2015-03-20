@@ -1,0 +1,246 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="50dp"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#f4f4f4"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:background="#00000000"
+                android:text="@string/set_selft_title"
+                android:textColor="#b32317"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#cdcdcd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0" >
+
+                <TableRow
+                    android:id="@+id/row_monday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/monday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_monday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_Tuesday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_Tuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/Tuesday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_Tuesday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_wednesday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_wednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/wednesday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_wednesday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_Thursday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_Thursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/Thuresday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_Thursday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_friday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_Friday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/Friday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_Friday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_saturday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_Saturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/Staurday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_Saturday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_sunday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_bg"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick" >
+
+                    <TextView
+                        android:id="@+id/tv_self_sunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/sunday" />
+
+                    <CheckBox
+                        android:id="@+id/chbox_sunday"
+                        style="@style/CustomCheckboxTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#cdcdcd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_self_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_music_select"
+                android:text="取消"
+                android:textColor="@color/fanfan_red"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_self_sure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_music_select"
+                android:text="确定"
+                android:textColor="@color/fanfan_red"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

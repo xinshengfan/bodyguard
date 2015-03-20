@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">贴身卫士</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="sos">SOS</string>
+    <string name="peace">报平安</string>
+    <string name="action_settings">Settings</string>
+    <string name="str_set_title">设置</string>
+    <string name="str_about_title">关于</string>
+    <string name="str_btn_save">保存</string>
+    <string name="btn_cancelselect">取消已选</string>
+    <string name="btn_save">保存</string>
+    <string name="shortcutKey">锁屏下紧急报警快捷键</string>
+    <string name="selectmusicname">小苹果</string>
+    <string name="notifynumber">设定优先通知号码</string>
+    <string name="modifylock">修改手势密码</string>
+    <string name="notificationContent">编辑紧急通知内容</string>
+    <string name="setinterval">发送信息时间间隔</string>
+    <string name="hintinterval">未消除警报前会间隔发出信息</string>
+    <string name="peaceontime">编辑报平安信息</string>
+    <string name="isuserecord">是否启用录音</string>
+    <string name="hintautosend">录音完成后会自动发送</string>
+    <string name="isplayvoice">是否播放铃音</string>
+    <string name="hintwarning">在发送完信息后播放，用于震慑歹徒，酌情使用</string>
+    <string name="issaypaece">是否定时报平安</string>
+    <string name="hintstrangeness">去陌生地方或见陌生人，请打开</string>
+    <string name="hintgps">打开GPS会使定位更准确</string>
+    <string name="isopengps">是否打开GPS</string>
+    <string name="set_up_volume">重复长按上音量键</string>
+    <string name="set_down_volume">重复长按下音量键</string>
+    <string name="set_dialog_title">选择快捷启动键</string>
+    <string name="set_selft_title">设定周期</string>
+    <string name="record_reminder">提示：由于彩信大小限制，最大只能录音50秒。</string>
+    <string name="interval_reminder">提示：在触发紧急求救成功后，会按设定的时间间隔将最新的地点发送到指定手机</string>
+    <string name="message">我现在在%1$s附近,遇到坏人，求帮助！</string>
+    <string name="peace_message">我现在在%1$s附近,目前平安，请放心！</string>
+    <string name="self_hint_tomorrow">当前时间无效，是否在明天%1$s发出平安信息？</string>
+    <string name="self_hint_cleartime">有相近的时间%1$s，是否继续保存？</string>
+    <string name="remaining_word">还可输入%1$s字</string>
+    <string name="btn_system_music">系统铃音</string>
+    <string name="btn_media_music">媒体铃音</string>
+    <string name="reminder_add_time">添加报平安时间</string>
+    <string name="addtimecycle">设定周期</string>
+    <string name="addtimedate">设定日期</string>
+    <string name="cycle_everydar">每天</string>
+    <string name="cycle_onetime">一次</string>
+    <string name="cycle_myself">自定义</string>
+    <string name="monday">星期一</string>
+    <string name="Tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="Thuresday">星期四</string>
+    <string name="Friday">星期五</string>
+    <string name="Staurday">星期六</string>
+    <string name="sunday">星期日</string>
+    <string name="lock_hint">请输入手势密码解锁</string>
+    <string name="lock_pwderror">密码错误</string>
+    <string name="lock_pwdnotfit">两次密码不一致</string>
+    <string name="lock_pwdcorrect">密码正确</string>
+    <string name="lock_oldpwd">请输入原手势密码</string>
+    <string name="lock_fourpoint">至少连接4个点，请重试</string>
+    <string name="lock_setnewpwd">请设置手势密码</string>
+    <string name="lock_sethint">设置手势密码后，歹徒就不能解除你的警报信息，请正确设置</string>
+    <string name="lock_setnewpwdtoo">请再次输入以确认</string>
+    <string name="text_supportdesc">&#160;&#160;&#160;&#160;随着女性失联新闻屡屡见报，女大学生受害事件日益增加，老人走失、小孩被拐频繁出现，我们身边总有一些阳光照不到的阴暗,提高安全意识刻不容缓。\n\n我们一直致力于对女性安全的研究，在危急时刻能带去一份帮助和希望。\n\n
+        但目前我们正处于草创阶段，还有很长的路要走&#8230;\n\n关注女性安全，给她们一个蓝天&#8230;\n\n若有你的帮助和支持，我们会走的更远！\n</string>
+    <!-- Accessibility description sent when user starts drawing a lock pattern. [CHAR LIMIT=NONE] -->
+    <string name="lockscreen_access_pattern_start">Pattern started</string>
+    <!-- Accessibility description sent when the pattern times out and is cleared. [CHAR LIMIT=NONE] -->
+    <string name="lockscreen_access_pattern_cleared">Pattern cleared</string>
+    <!-- Accessibility description sent when user adds a cell to the pattern. [CHAR LIMIT=NONE] -->
+    <string name="lockscreen_access_pattern_cell_added">Cell added</string>
+    <!-- Accessibility description sent when user completes drawing a pattern. [CHAR LIMIT=NONE] -->
+    <string name="lockscreen_access_pattern_detected">Pattern completed</string>
+    <string name="second">秒</string>
+    <string name="minute">分钟</string>
+    <string name="about_me_1">【专注于女性、小孩、老人的安全问题，在其遇到危险时送去一份希望。】</string>
+    <string name="about_me_2">随着诸多女大学生失联、女性受害、老人走失、小孩被拐的新闻登上头条时，你还敢深夜独自走在街头吗？\n\n你还放心让你的小孩独自愉快的玩耍吗？\n\n你还能不担心你的父母找不到回家的路吗？\n\n你有曾体会过孤独无援的绝望吗？\n\n&#8230;&#8230;&#8230;&#8230;&#8230;</string>
+    <string name="about_me_3">【贴身卫士】给你带去一份希望和心安。</string>
+    <string name="about_me_4">1.在口袋里一键报警。\n在遇到危险时，不需要你掏出手机；只需要你在口袋里长按上\下音量键，就能将你当前的位置和信息发送到你指定的手机；并且在你没有输入密码消除报警前，【贴身卫士】会按设定时间定时将最新的位置发送出去。\n\n
+2. 迷惑警报。\n当你启动一键报警后，【贴身卫士】会大声播放设定的警报声，聪明的你一定会好好把握这个机会。\n\n
+3.一键报平安。\n不论走到哪里，记着还有人在家牵挂着你，到达后不要忘了向家人报个平安。\n\n
+4.去陌生地见陌生人定时报平安。\n想去见从未见面却聊的很嗨的网友，可又怕差距太大上当受骗，你只需在见他之前打开定时报平安功能，手机会自动将你的位置发给你指定的手机。\n\n
+5. 录下骗子的声音。\n当你觉得你可能掉入一个陷阱时，按下SOS，会先自动发送你的位置信息然后再打开录音，在设定的时间后结束并转成彩信发送出去。</string>
+    <string name="about_me_5">提高安全意识，关注自身安全。让贴身卫士成为你永远的守护精灵！</string>
+    <string name="about_me_6">有了你的支持，我们会将【贴身卫士】打造的更好。若有建议和反馈，请联系我们。</string>
+    <string name="about_me_7">Email:baijmh@163.com</string>
+    <string name="about_me_8">QQ群：19312975</string>
+    <string name="about_me_9">微信群：</string>
+    <string name="email1">baijmh@163.com</string>
+    <string name="email2">xinshengping@163.com</string>
+    <string name="share_content">#贴身卫士#关注老人、小孩、妇女或身边朋友的安全，让他们不再失联，在他们危险时第一时间送去一份希望。请给他们装上贴身卫士吧！ http://fir.im/8zye/</string>
+    <string name="alipay_hint">注:支持时，请留下你的个人信息或联系信息，以供后期感谢！~</string>
+
+</resources>

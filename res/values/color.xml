@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 暗红色 -->
+    <color name="darkred">#8b0000</color>
+    <color name="red">#FF504E</color>
+    <!-- 粉红色 -->
+
+    <color name="pink">#ccffc0cb</color>
+    <color name="gray">#e5e5e5</color>
+    <color name="white">#ccffc0cb</color>
+    <color name="item_bg_pressed">#ffebebeb</color>
+    <color name="grey_item_stroke">#E1DFDA</color>
+
+    <drawable name="fanfan_gray">#999999</drawable>
+    <drawable name="fanfan_white">#ffffff</drawable>
+    <drawable name="fanfan_black">#333333</drawable>
+
+    <color name="bg_select_music_pressed">#20202020</color>
+    <color name="btn_music_pressed">#B5B2B2</color>
+    <color name="btn_bg_pressed">#50ebebeb</color>
+    <color name="btn_bg_celeste">#10ebebeb</color>
+    <color name="transparent">#9000</color>
+    <color name="fanfan_red">#b32317</color>
+    <color name="btn_fanfan_red">#a0b32317</color>
+    <color name="listitem_border_press">#bababa</color>
+    <color name="listitem_border_normal">#bababa</color>
+    <color name="listitem_background_normal_start">#ffffff</color>
+    <color name="listitem_background_normal_end">#ffffff</color>
+    <color name="listitem_background_normal_center">#ffffff</color>
+    <color name="listitem_background_press_gray_start">#e5e5e5</color>
+    <color name="listitem_background_press_gray_end">#e5e5e5</color>
+    <color name="ui_relation_our_text_2">#666666</color>
+    <color name="ui_relation_our_text_1">#333333</color>
+
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F6F6"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/top" >
+
+        <ImageButton
+            android:id="@+id/addtime_imb_leftmenu"
+            style="@style/ReturnBack_Button_Style"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/bt_add_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_item_hellow"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="@string/str_btn_save"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+    <TimePicker
+        android:id="@+id/timePicker_select_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_item_solid"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/rela_set_addtime"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_item_solid"
+            android:onClick="onClick"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+
+            <ImageView
+                android:id="@+id/img_set_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="17dip"
+                android:duplicateParentState="true"
+                android:src="@drawable/icon_right_arrow_userinfo"
+                android:visibility="visible" />
+
+            <TextView
+                style="@style/ListItemTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dip"
+                android:text="@string/addtimecycle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rela_set_adddate"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_item_solid"
+            android:onClick="onClick"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="17dip"
+                android:duplicateParentState="true"
+                android:src="@drawable/icon_right_arrow_userinfo"
+                android:visibility="visible" />
+
+            <TextView
+                style="@style/ListItemTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dip"
+                android:text="@string/addtimedate" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

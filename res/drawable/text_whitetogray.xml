@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+		<item android:drawable="@color/ic_tab_history_selected"
+		android:state_pressed="true" /> <item
+		android:drawable="@drawable/ic_tab_history_selected"
+		android:state_selected="true" />
+    -->
+    <item android:state_checked="false" android:state_enabled="true" android:state_pressed="false" android:color="@drawable/fanfan_white"/>
+    <item android:state_checked="false" android:state_enabled="true" android:state_pressed="true" android:color="@drawable/fanfan_gray"/>
+
+</selector>
