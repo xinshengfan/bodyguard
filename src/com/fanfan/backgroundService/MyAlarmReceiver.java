@@ -27,9 +27,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		// 发送信息，在此处判断自定义的时间
 		String action = intent.getAction();
-		CLog.i("info", "接收到发送信息广播:" + intent);
 		if (G.ACTION_ALARM_SEND.equals(action)) {
-
 			String time = intent.getStringExtra(G.KEY_ALARM_TIME);
 			long time_seconds = Long.parseLong(time);
 			if (time_seconds<System.currentTimeMillis()-10*1000) {
@@ -53,7 +51,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 				sendSafetyMessage();
 			}
 		} else if (G.ACTION_APP_REMOVED.equals(action)) {
-			CLog.i("info", "receiver 中启动service");
 			Intent startService = new Intent(MyApp.getInstance()
 					.getApplicationContext(), ListenService.class);
 			startService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -63,7 +60,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 	}
 
 	private void sendSafetyMessage() {
-		CLog.i("info", "定时服务下开始发送信息");
 		String peace_msg = preferUtils.getStringPrefer(G.KEY_SAVE_PEACE);
 		if (TextUtils.isEmpty(peace_msg)) {
 			peace_msg = String.format(MyApp.getInstance().getResources()

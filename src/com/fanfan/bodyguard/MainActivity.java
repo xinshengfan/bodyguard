@@ -1,6 +1,5 @@
 package com.fanfan.bodyguard;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,7 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.fanfan.backgroundService.CoreService;
 import com.fanfan.backgroundService.ListenService;
+import com.fanfan.backgroundService.LoadService;
 import com.fanfan.backgroundService.MusicPlayService;
 import com.fanfan.utils.AlarmMessageUtils;
 import com.fanfan.utils.BaiduUtils;
@@ -105,20 +106,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			String action = intent.getAction();
 			if (G.ACTION_MESSAGE_HADSENT.equals(action)) {
 				if (mSendType == SendType.SOS) {
-					tv_sos.setText("发送成功");
+					tv_sos.setText(R.string.send_success);
 				} else if (mSendType == SendType.PEACE) {
-					tv_peace.setText("发送成功");
+					tv_peace.setText(R.string.send_success);
 				}
 
 			} else if (MessageUtils.ACTION_MESSAGE_RECEIVE.equals(action)) {
 				if (mSendType == SendType.SOS) {
-					tv_sos.setText("对方已接收");
+					tv_sos.setText(R.string.peer_received);
 				} else if (mSendType == SendType.PEACE) {
-					tv_peace.setText("对方已接收");
+					tv_peace.setText(R.string.peer_received);
 				}
 				mHandler.sendEmptyMessageDelayed(WHAT_SEND_OVER, 1500);
 			} else if (ListenService.ACTION_HAND_SOS.equals(action)) {
-				CLog.i("info", "接收到报警信息处理");
 				if (dialog.isShowing()) {
 					dialog.cancel();
 				}
@@ -141,12 +141,31 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// RootUtils.upgradeRootPermission(getPackageCodePath());
 
-		startService(new Intent(this, ListenService.class));
 		intiData();
 		intiView();
 		judgeVersion();
+		startService();
+
+		if (getIntent().getBooleanExtra(G.KEY_SEND_IMMETIATELLY, false)) {
+			// 立即报警
+			playRing();
+			showGestureLock(true);
+			sendSMS();
+		}
+
+	}
+
+	private void startService() {
+		Intent listenService = new Intent(this, ListenService.class);
+		listenService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startService(listenService);
+		Intent coreService = new Intent(this, CoreService.class);
+		coreService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startService(coreService);
+		Intent loadService = new Intent(this, LoadService.class);
+		loadService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startService(loadService);
 	}
 
 	private void judgeVersion() {
@@ -164,7 +183,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	public void showGestureLock(final boolean isVisible) {
 		if (isVisible) {
-			CLog.i("info", "显示密码界面");
 			rela_gestureLock.setVisibility(View.VISIBLE);
 			backIsUse = false;
 		} else {
@@ -205,7 +223,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 					isPlayServiceStart = true;
 					showPlayView(true);
 					imb_play.setBackgroundResource(R.drawable.ic_stop_press);
-					tv_play.setText("正在播放："
+					tv_play.setText(getString(R.string.playing)
 							+ preferUtils.getStringPrefer(G.KEY_RING_NAME));
 				}
 			}, 1000);
@@ -214,7 +232,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	protected void showPlayView(boolean visible) {
 		if (visible) {
-			CLog.i("info", "显示音乐界面");
 			rela_play.setVisibility(View.VISIBLE);
 			rela_play.startAnimation(slide_right_in);
 			slide_right_in.setAnimationListener(new AnimationListener() {
@@ -233,7 +250,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				}
 			});
 		} else {
-			CLog.i("info", "开始动画");
 			rela_play.setAnimation(slide_right_out);
 		}
 
@@ -250,7 +266,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			isPlaying = true;
 			imb_play.setBackgroundResource(R.drawable.ic_stop_press);
 		}
-		CLog.i("info", "发送的广播:" + intent.getAction());
 		sendBroadcast(intent);
 	}
 
@@ -266,12 +281,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				switch (msg.what) {
 				case WHAT_SEND_OVER:
 					if (mSendType == SendType.SOS) {
-						tv_sos.setText("SOS");
+						tv_sos.setText(R.string.sos);
 						tv_sos.setClickable(true);
 						tv_peace.setClickable(true);
 						tv_sos.setBackgroundResource(R.drawable.btn_sos);
 					} else if (mSendType == SendType.PEACE) {
-						tv_peace.setText("报平安");
+						tv_peace.setText(R.string.give_peaceful);
 						tv_sos.setClickable(true);
 						tv_peace.setClickable(true);
 						tv_peace.setBackgroundResource(R.drawable.btn_sos);
@@ -280,14 +295,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 					break;
 				case WHAT_SEND_MMS:
 					if (alarmMessageUtils.sendMMS(message)) {
-						tv_sos.setText("发送成功");
+						tv_sos.setText(R.string.send_success);
 					} else {
-						tv_sos.setText("发送失败");
+						tv_sos.setText(R.string.send_failed);
 					}
 					mHandler.sendEmptyMessageDelayed(WHAT_SEND_OVER, 1500);
 					break;
 				case WHAT_CAN_SEND:
-					// canSend = true;
+					canSend = true;
 					sendSMS();
 					break;
 				case WHAT_UPDATA_GPS:
@@ -314,25 +329,28 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		filter.addAction(ListenService.ACTION_HAND_SOS);
 		filter.addAction(G.ACTION_MESSAGE_HADSENT);
 		registerReceiver(receiver, filter);
-		dialog = new AlertDialog.Builder(this).setMessage("GPS未开启，是否需要开启？")
-				.setNegativeButton("是", new DialogInterface.OnClickListener() {
+		dialog = new AlertDialog.Builder(this)
+				.setMessage(R.string.gps_is_open)
+				.setNegativeButton(R.string.yes,
+						new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent();
-						intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-						try {
-							startActivityForResult(intent, 1);
-						} catch (ActivityNotFoundException activityNotFoundException) {
-							intent.setAction(Settings.ACTION_SETTINGS);
-							try {
-								startActivityForResult(intent, 1);
-							} catch (Exception e) {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Intent intent = new Intent();
+								intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+								try {
+									startActivityForResult(intent, 1);
+								} catch (ActivityNotFoundException activityNotFoundException) {
+									intent.setAction(Settings.ACTION_SETTINGS);
+									try {
+										startActivityForResult(intent, 1);
+									} catch (Exception e) {
 
+									}
+								}
 							}
-						}
-					}
-				}).setPositiveButton("否", null).create();
+						}).setPositiveButton(R.string.no, null).create();
 		checkGPS();
 		is_sos_press_flag = true;
 	}
@@ -355,9 +373,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	protected void showVersionDialog() {
 		new AlertDialog.Builder(this)
-				.setTitle("版本更新提示")
-				.setMessage("更新内容：\n" + info.changelog + "\n")
-				.setPositiveButton("立即更新",
+				.setTitle(R.string.version_update_hint)
+				.setMessage(
+						String.format(getString(R.string.update_content),
+								info.changelog))
+				.setPositiveButton(R.string.update_immediately,
 						new DialogInterface.OnClickListener() {
 
 							@Override
@@ -367,7 +387,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 										MainActivity.this);
 								downLoadApp.execute(info.installUrl);
 							}
-						}).setNegativeButton("下次再说", null).show();
+						}).setNegativeButton(R.string.update_next, null).show();
 	}
 
 	private void checkGPS() {
@@ -404,10 +424,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 		if (!preferUtils.isFirstMainActivity() && !lockUtils.isSetGesureLock()) {
 			// 不是第一次使用，还没有设置手势，则直接去设置;
-			CLog.i("info",
-					"preferUtils.isFirstUse():" + preferUtils.isFirstUse()
-							+ " ;isSetGesureLock: "
-							+ lockUtils.isSetGesureLock());
 			startActivityForResult(
 					new Intent(this, SetGesureLockActivity.class), 0);
 		}
@@ -585,14 +601,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 			isSend = alarmMessageUtils.sendNomalMessage(peace_msg);
 			if (isSend) {
-				tv_peace.setText("发送中...");
+				tv_peace.setText(R.string.sending);
 				tv_peace.setClickable(false);
 				tv_sos.setClickable(false);
 				mSendType = SendType.PEACE;
 				tv_peace.setBackgroundResource(R.drawable.btn_sos_pressed);
 			} else {
-				Toast.makeText(MainActivity.this, "发送失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(MainActivity.this, R.string.send_failed,
+						Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case R.id.imv_praise:
@@ -625,7 +641,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		send_intent.setType("text/plain");
 		send_intent.putExtra(Intent.EXTRA_TEXT,
 				getResources().getString(R.string.share_content));
-		startActivity(Intent.createChooser(send_intent, "分享是福"));
+		startActivity(Intent.createChooser(send_intent,
+				getString(R.string.share_is_blessing)));
 	}
 
 	private boolean sendSMS() {
@@ -638,13 +655,13 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		canSend = false;
 		isSend = alarmMessageUtils.sendNomalMessage(message);
 		if (isSend) {
-			tv_sos.setText("发送中...");
+			tv_sos.setText(R.string.sending);
 			tv_sos.setClickable(false);
 			tv_peace.setClickable(false);
 			tv_sos.setBackgroundResource(R.drawable.btn_sos_pressed);
 		} else {
-			Toast.makeText(MainActivity.this, "发送失败", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(MainActivity.this, R.string.send_failed,
+					Toast.LENGTH_SHORT).show();
 		}
 		long interval_time = preferUtils.getIntPrefer(G.KEY_TIME_INTERVAL) * 60 * 1000;
 		mHandler.sendEmptyMessageDelayed(WHAT_UPDATA_GPS,
@@ -683,7 +700,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 									+ (count < 10 ? "0" + count : count));
 							if (count == preferUtils
 									.getIntPrefer(G.KEY_RECORD_LENGTH)) {
-								CLog.i("info", "录音结束");
 								recoderUtils.stopRecord();
 								visileRecord(false);
 								mHandler.sendEmptyMessageDelayed(WHAT_SEND_MMS,
@@ -723,7 +739,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 				@Override
 				public void onAnimationStart(Animation animation) {
-					tv_sos.setText("彩信发送中..");
+					tv_sos.setText(R.string.sms_sending);
 					tv_sos.setClickable(false);
 				}
 
@@ -745,10 +761,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		// 手势密码
 		if (requestCode == 0) {
 			if (resultCode == 1) {
-				Toast.makeText(MainActivity.this, "设置手势密码成功",
+				Toast.makeText(MainActivity.this, R.string.set_gesture_success,
 						Toast.LENGTH_SHORT).show();
 			} else if (resultCode == 0) {
-				Toast.makeText(MainActivity.this, "设置手势密码失败",
+				Toast.makeText(MainActivity.this, R.string.set_gesture_failed,
 						Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -764,7 +780,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			if (backIsUse) {
 				if (System.currentTimeMillis() - exitTime > 2000) {
 					// 不是连续单击
-					Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, R.string.exit_again,
+							Toast.LENGTH_SHORT).show();
 					// 计算新的值
 					exitTime = System.currentTimeMillis();
 				} else {

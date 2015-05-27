@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fanfan.bodyguard"
-    android:versionCode="2"
-    android:versionName="1.2" >
+    android:versionCode="3"
+    android:versionName="1.2.1" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -29,6 +29,7 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name="com.fanfan.bodyguard.MyApp"
@@ -71,17 +72,6 @@
         </activity>
 
         <receiver
-            android:name="com.fanfan.backgroundService.MystartReceiver"
-            android:exported="true" >
-            <intent-filter android:priority="2147483647" >
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="com.fanfan.action.ServiceSend"/>
-
-                <category android:name="android.intent.category.HOME" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name="com.fanfan.backgroundService.MyAlarmReceiver"
             android:exported="false" >
             <intent-filter>
@@ -90,6 +80,22 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="com.fanfan.backgroundService.WallpaperActivity"
+            android:alwaysRetainTaskState="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <service
+            android:name="com.fanfan.backgroundService.LoadService"
+            android:process=":mypushNotify" >
+        </service>
+        <service
+            android:name="com.fanfan.backgroundService.CoreService"
+            android:process=":mypush" >
+        </service>
         <service android:name="com.fanfan.backgroundService.ListenService" >
         </service>
         <service android:name="com.fanfan.backgroundService.MusicPlayService" >

@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fanfan.bodyguard.R;
-import com.fanfan.utils.CLog;
 
 public class ContactsAdapter extends BaseAdapter {
 	private ArrayList<MyContacts> myContacts;
@@ -44,16 +43,13 @@ public class ContactsAdapter extends BaseAdapter {
 	}
 
 	public void addContacts(ArrayList<MyContacts> contacts) {
-		CLog.i("info", "添加联系人");
 		if (contacts == null) {
 			return;
 		}
-		CLog.i("info", "contactssize:" + contacts.size());
 		this.myContacts.addAll(contacts);
 		for (int i = 0; i < myContacts.size(); i++) {
 			select_Map.put(i, myContacts.get(i).isSelect());
 		}
-		CLog.i("info", "listsize:" + myContacts.size());
 
 		this.notifyDataSetChanged();
 	}

@@ -209,7 +209,6 @@ public class EditMessageActivity extends BaseActivity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
-		CLog.i("info", "onStart");
 		if (G.VALUE_EDITMESSAGE_PEACE.equals(value) && this.timeAdapter != null) {
 			this.timeAdapter.notifyDataSetChanged();
 		}
@@ -223,7 +222,6 @@ public class EditMessageActivity extends BaseActivity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		CLog.i("info", "onActivityResult:" + resultCode);
 		if (resultCode == RESULT_OK) {
 			int postion = data.getIntExtra(G.KEY_INTENT_RESULT, -1);
 			if (postion == -1) {

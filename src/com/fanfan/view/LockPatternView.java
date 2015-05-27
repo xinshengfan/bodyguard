@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2007 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.fanfan.view;
 
 import java.util.ArrayList;
@@ -1149,17 +1133,19 @@ public class LockPatternView extends View {
 				mEnableHapticFeedback);
 	}
 
-	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
-		final SavedState ss = (SavedState) state;
-		super.onRestoreInstanceState(ss.getSuperState());
-		setPattern(DisplayMode.Correct,
-				LockPatternUtils.stringToPattern(ss.getSerializedPattern()));
-		mPatternDisplayMode = DisplayMode.values()[ss.getDisplayMode()];
-		mInputEnabled = ss.isInputEnabled();
-		mInStealthMode = ss.isInStealthMode();
-		mEnableHapticFeedback = ss.isTactileFeedbackEnabled();
-	}
+	// @Override
+	// protected void onRestoreInstanceState(Parcelable state) {
+	// super.onRestoreInstanceState(state);
+	// if (state instanceof SavedState) {
+	// final SavedState ss = (SavedState) state;
+	// setPattern(DisplayMode.Correct,
+	// LockPatternUtils.stringToPattern(ss.getSerializedPattern()));
+	// mPatternDisplayMode = DisplayMode.values()[ss.getDisplayMode()];
+	// mInputEnabled = ss.isInputEnabled();
+	// mInStealthMode = ss.isInStealthMode();
+	// mEnableHapticFeedback = ss.isTactileFeedbackEnabled();
+	// }
+	// }
 
 	/**
 	 * The parecelable for saving and restoring a lock pattern view.
@@ -1228,8 +1214,8 @@ public class LockPatternView extends View {
 			dest.writeValue(mTactileFeedbackEnabled);
 		}
 
-		// public static final Parcelable.Creator<SavedState> CREATOR =
-		// new Creator<SavedState>() {
+		// public static final Parcelable.Creator<SavedState> CREATOR = new
+		// Creator<SavedState>() {
 		// public SavedState createFromParcel(Parcel in) {
 		// return new SavedState(in);
 		// }

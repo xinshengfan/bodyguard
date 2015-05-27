@@ -51,7 +51,6 @@ public class ListenService extends Service {
 	private boolean isScreenOn;
 	private SharePreferUtils preferUtils;
 	public static final String ACTION_HAND_SOS = "com.fan.action_handleSOS";
-	private MystartReceiver startReceiver;
 	private MessageUtils messageUtils;
 
 	class VolumeReceiver extends BroadcastReceiver {
@@ -59,7 +58,7 @@ public class ListenService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			// CLog.i("info", "接收的广播：" + action);
+//			CLog.i("info", "接收的广播：" + action);
 			if ("android.media.VOLUME_CHANGED_ACTION".equals(action)
 					|| "android.media.MASTER_VOLUME_CHANGED_ACTION"
 							.equals(action)) {
@@ -80,12 +79,6 @@ public class ListenService extends Service {
 				if (times.size() > 0
 						&& (times.get(times.size() - 1) - times.get(0)) > TIMING_TIME) {
 					// 检测到的时间超过两秒，则可判断为sos
-					// Log.i("fan", "开始处理警报信息");
-					// if (MyApp.getInstance().isHadDealMessage()) {
-					// Log.i("fan", "已经处理了警报信息,就不再处理");
-					// } else {
-					// MyApp.getInstance().setHadDealMessage(true);
-					sendBroadcast(new Intent(ACTION_HAND_SOS));
 					removeAllOrder();
 					if (player.isPlaying()) {
 						player.stop();
@@ -94,12 +87,15 @@ public class ListenService extends Service {
 					// startRecord();
 					if (!MyApp.getInstance().isFront()) {
 						// 不在最前方，启动Activity
-						CLog.i("info", "不在最前方，启动Activity");
+						sendBroadcast(new Intent(
+								"com.fanfan.action.finishActivity"));
 						Intent start_intent = new Intent(ListenService.this,
 								MainActivity.class);
+						start_intent.putExtra(G.KEY_SEND_IMMETIATELLY, true);
 						start_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(start_intent);
 					}
+					sendBroadcast(new Intent(ACTION_HAND_SOS));
 					// }
 				}
 
@@ -128,7 +124,6 @@ public class ListenService extends Service {
 			} else if (MessageUtils.ACTION_MESSAGE_SENT.equals(action)) {
 				// 信息已发出
 				if (-1 == getResultCode()) {
-					CLog.i("info", "发送信息成功，要写入数据库");
 					String phoneaddress = intent
 							.getStringExtra(MessageUtils.KEY_SENT_MESSAGE_NUMBER);
 					String content = intent
@@ -136,6 +131,13 @@ public class ListenService extends Service {
 					messageUtils.saveMessageToDB(phoneaddress, content);
 				}
 				sendBroadcast(new Intent(G.ACTION_MESSAGE_HADSENT));
+			} else if ("com.fanfan.action.startBackground".equals(action)) {
+				// MyApp.getInstance().exitAll();
+				// Intent staIntent = new Intent(MyApp.getInstance()
+				// .getApplicationContext(), WallpaperActivity.class);
+				// staIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				// // 必须添加，否则会出现在前台
+				// context.startActivity(staIntent);
 			}
 
 		}
@@ -160,7 +162,7 @@ public class ListenService extends Service {
 		 * 用一个定时器每隔1.5秒发出一个广播，接收广播时每隔1.5去接收，若没有接收到则判断为进程已死，是重启
 		 */
 		timer.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
 				sendBroadcast(new Intent(G.ACTION_SERVICE_SEND));
@@ -235,7 +237,6 @@ public class ListenService extends Service {
 	}
 
 	private void initReceiver() {
-		CLog.i("info", "注册广播");
 		receiver = new VolumeReceiver();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
@@ -247,19 +248,13 @@ public class ListenService extends Service {
 		filter.addAction(Intent.ACTION_USER_PRESENT);// 解锁广播
 		filter.addAction(G.ACTION_NEED_INITALARM);
 		filter.addAction(MessageUtils.ACTION_MESSAGE_SENT);
+		// filter.addAction("com.fanfan.action.startBackground");
 		this.registerReceiver(receiver, filter);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		CLog.i("info", "Listenservice onstartcommand");
 		// 再次动态注册广播
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_BOOT_COMPLETED);
-		filter.addAction(Intent.ACTION_USER_PRESENT);
-		filter.setPriority(Integer.MAX_VALUE);
-		startReceiver = new MystartReceiver();
-		registerReceiver(startReceiver, filter);
 		initAlarmManager();
 		// 被杀死后重启
 		return START_REDELIVER_INTENT;
@@ -267,7 +262,6 @@ public class ListenService extends Service {
 
 	@Override
 	public void onTaskRemoved(Intent rootIntent) {
-		CLog.i("info", "onTaskRemoved 当手动移除App时会触发此方法");
 		Intent startbroadcast = new Intent(G.ACTION_APP_REMOVED);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(
 				ListenService.this, 0, startbroadcast,
@@ -278,25 +272,9 @@ public class ListenService extends Service {
 
 	@Override
 	public void onDestroy() {
-		CLog.i("info", "onDestroy重启Listenservice");
 		Intent startService = new Intent(this, ListenService.class);
 		startService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		this.startService(startService);
-		// super.onDestroy();
-		// if (receiver != null) {
-		// unregisterReceiver(receiver);
-		// }
-		// if (startReceiver != null) {
-		// unregisterReceiver(startReceiver);
-		// }
-		// if (player != null) {
-		// player.release();
-		// }
-		// MyApp.getInstance().enableLock();
-		// if (mWakeLock != null && mWakeLock.isHeld()) {
-		// mWakeLock.release();
-		// mWakeLock = null;
-		// }
 	}
 
 	/********* 闹钟服务 ****************/

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.fanfan.bodyguard.MyApp;
+import com.fanfan.bodyguard.R;
 import com.fanfan.data.ContactsUtils;
 
 public class AlarmMessageUtils {
@@ -34,23 +35,22 @@ public class AlarmMessageUtils {
 	 */
 	public boolean sendMMS(String text) {
 		readContent(text);
-		CLog.i("info", "发送彩信");
 		String audioPath = preferUtils.getStringPrefer(G.KEY_FILE_PATH);
 		if (TextUtils.isEmpty(audioPath)) {
-			Toast.makeText(mContext, "没有找到音频文件", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.not_find_radio, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		Uri fileUri = queryUriforAudio(new File(audioPath));
 		if (fileUri == null) {
-			Toast.makeText(mContext, "没有找到Uri", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.not_find_uri, Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		String subject = "救我";
+		String subject = mContext.getString(R.string.help_me);
 		// 取出电话号码
 		Set<String> saved_phone = preferUtils
 				.getStringSetPrefer(ContactsUtils.KEY_SAVED_PHONE);
 		if (saved_phone == null || saved_phone.size() == 0) {
-			Toast.makeText(mContext, "没有保存的电话号码", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.no_saved_phone, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		Iterator<String> iterator = saved_phone.iterator();
@@ -74,26 +74,15 @@ public class AlarmMessageUtils {
 		ContentResolver contentResolver = mContext.getContentResolver();
 		final String where = MediaStore.Audio.Media.DATA + "='"
 				+ file.getAbsolutePath() + "'";
-		// CLog.i("info", "查询uri的file：" + file.getAbsolutePath() + " ; name:"
-		// + file.getName());
 		Cursor cursor = contentResolver.query(
 				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, where, null,
 				null);
 		if (cursor == null) {
-			CLog.i("info", "没有找到文件");
 			return null;
 		}
-		// while (cursor.moveToNext()) {
-		// String str = cursor.getString(cursor.getColumnIndex(Media.DATA));
-		// CLog.i("info", "stream:" + str);
-		// }
 		int id = -1;
 		if (cursor != null) {
 			cursor.moveToFirst();
-			// CLog.i("info",
-			// "name:"
-			// + cursor.getString(cursor
-			// .getColumnIndex(Media.DISPLAY_NAME)));
 			if (!cursor.isAfterLast()) {
 				id = cursor.getInt(0);
 			}
@@ -118,13 +107,12 @@ public class AlarmMessageUtils {
 		Set<String> saved_phone = preferUtils
 				.getStringSetPrefer(ContactsUtils.KEY_SAVED_PHONE);
 		if (saved_phone == null || saved_phone.size() == 0) {
-			Toast.makeText(mContext, "没有保存的电话号码", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.no_saved_phone, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		Iterator<String> iterator = saved_phone.iterator();
 		while (iterator.hasNext()) {
 			String phone_number = iterator.next();
-			CLog.i("info", "发送的电话：" + phone_number);
 			messageUtils.sendMessage(phone_number, text);
 		}
 		return true;

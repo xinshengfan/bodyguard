@@ -38,7 +38,7 @@ public class MyApp extends Application {
 	public MyLocationListener myLocationListener;
 	private SharePreferUtils preferUtils;
 	private FileManager fileManager;
-	public static final String FILE_NAME = "warning.mp3";
+	public static final String FILE_NAME = "warning.wav";
 	private boolean isSettingRing;// 是否存在设置铃音，以过滤一种情况
 
 	public boolean isSettingRing() {
@@ -94,7 +94,6 @@ public class MyApp extends Application {
 
 	@Override
 	public void onTerminate() {
-		CLog.i("info", "App onTerminate重启Listenservice");
 		Intent startService = new Intent(this, ListenService.class);
 		startService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		this.startService(startService);
@@ -105,7 +104,7 @@ public class MyApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-		CLog.isDebug = true;
+		CLog.isDebug = false;
 		activities = new ArrayList<Activity>();
 		KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
 		kl = km.newKeyguardLock("mylock");

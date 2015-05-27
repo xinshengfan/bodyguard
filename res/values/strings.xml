@@ -91,5 +91,30 @@
     <string name="email2">xinshengping@163.com</string>
     <string name="share_content">#贴身卫士#关注老人、小孩、妇女或身边朋友的安全，让他们不再失联，在他们危险时第一时间送去一份希望。请给他们装上贴身卫士吧！ http://fir.im/8zye/</string>
     <string name="alipay_hint">注:支持时，请留下你的个人信息或联系信息，以供后期感谢！~</string>
+    <string name="send_success">发送成功</string>
+    <string name="peer_received">对方已接收</string>
+    <string name="playing">正在播放：</string>
+    <string name="give_peaceful">报平安</string>
+    <string name="send_failed">发送失败</string>
+    <string name="gps_is_open">GPS未开启，是否需要开启？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="version_update_hint">版本更新提示</string>
+    <string name="update_content">更新内容：\n%1$s\n</string>
+    <string name="update_immediately">立即更新</string>
+    <string name="update_next">下次再说</string>
+    <string name="sending">发送中...</string>
+    <string name="share_is_blessing">分享是福</string>
+    <string name="record_finish">录音结束</string>
+    <string name="sms_sending">彩信发送中..</string>
+    <string name="set_gesture_success">设置手势密码成功</string>
+    <string name="set_gesture_failed">设置手势密码失败</string>
+    <string name="exit_again">再按一次退出程序</string>
+    <string name="not_find_radio">没有找到音频文件</string>
+    <string name="not_find_uri">没有找到Uri</string>
+    <string name="help_me">救我</string>
+    <string name="no_saved_phone">没有保存的电话号码</string>
+    <string name="app_name_version">贴身卫士 V</string>
+    <string name="support">支持</string>
 
 </resources>

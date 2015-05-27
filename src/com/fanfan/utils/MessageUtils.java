@@ -75,14 +75,14 @@ public class MessageUtils {
 		telemanager = (TelephonyManager) mContext
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		myHandler = new Handler();
-		
+
 		String phoneInfo = "BOARD: " + android.os.Build.BOARD;
 		phoneInfo += ", MANUFACTURER: " + android.os.Build.MANUFACTURER;
 		phoneInfo += ", MODEL: " + android.os.Build.MODEL;
 		CLog.i("info", "$$$$$$$$$$ 生产厂家 $$$$$$$$$+\n" + phoneInfo);
 		phone_name = android.os.Build.MANUFACTURER;
-		if ("xiaomi".equalsIgnoreCase(phone_name)) {
-			messActivity_name = "com.android.mms.ui.NewMessageActivity";
+		if ("Xiaomi".equalsIgnoreCase(phone_name)) {
+			messActivity_name = "com.android.mms.ui.MmsTabActivity";
 		}
 	}
 
@@ -166,8 +166,7 @@ public class MessageUtils {
 	public void sendMMsActivity(Uri url, String subject, String phonenumber,
 			String context) {
 		Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse("mms://"));
-		intent.setClassName("com.android.mms",
-				messActivity_name);
+		intent.setClassName("com.android.mms", messActivity_name);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("compose_mode", false);
 		intent.putExtra("exit_on_sent", true);
@@ -177,59 +176,9 @@ public class MessageUtils {
 		intent.putExtra("sms_body", context); // 彩信中文字内容
 		intent.putExtra(Intent.EXTRA_TEXT, "it's EXTRA_TEXT");
 		intent.setType("audio/*");// 彩信附件类型
-		intent.setClassName("com.android.mms",
-				"com.android.mms.ui.ComposeMessageActivity");
 		mContext.startActivity(intent);
 		// mContext.startActivity(Intent.createChooser(intent, "MMS:"));
 	}
-
-	// public void sendMMS(final Context context, final String phone,
-	// final String subject, final String message, String imagePath,
-	// String audioPath) {
-	// new Thread() {
-	// @Override
-	// public void run() {
-	// try {
-	// Carrier carrier = null;
-	// APN apn = null;
-	// Settings sendSettings = new Settings();
-	// TelephonyManager tel = (TelephonyManager)
-	// getSystemService(Context.TELEPHONY_SERVICE);
-	// String networkOperator = tel.getNetworkOperator();
-	// if (networkOperator != null) {
-	// int mcc = Integer.parseInt(networkOperator.substring(0,
-	// 3));
-	// String s = networkOperator.substring(3);
-	// int mnc = Integer.parseInt(s);
-	// carrier = Carrier.getCarrier(mcc, mnc);
-	// carrier.getsmsemail();
-	// apn = carrier.getAPN();
-	// }
-	//
-	// sendSettings.setMmsc(apn.mmsc);
-	// sendSettings.setProxy(apn.proxy);
-	// sendSettings.setPort(Integer.valueOf(apn.port).toString());
-	// sendSettings.setGroup(true);
-	// sendSettings.setDeliveryReports(false);
-	// sendSettings.setSplit(false);
-	// sendSettings.setSplitCounter(false);
-	// sendSettings.setStripUnicode(false);
-	// sendSettings.setSignature("");
-	// sendSettings.setSendLongAsMms(true);
-	// sendSettings.setSendLongAsMmsAfter(3);
-	// sendSettings.setRnrSe(null);
-	// Transaction sendTransaction = new Transaction(instance,
-	// sendSettings);
-	// Message mMessage = new Message(message, phone);
-	// mMessage.setSubject(subject);
-	// mMessage.setType(Message.TYPE_SMSMMS);
-	// sendTransaction.sendNewMessage(mMessage, 0);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// };
-	// }.start();
-	// }
 
 	/**
 	 * apn必须是wap，当如果是net时，因为连接超时而无法发送，
@@ -249,7 +198,6 @@ public class MessageUtils {
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		String imsi = telManager.getSubscriberId();
 		if (imsi != null) {
-			CLog.i("info", "imsi:" + imsi);
 			ArrayList<String> list = new ArrayList<String>();
 			if (imsi.startsWith("46000") || imsi.startsWith("46002")) {
 				// 因为移动网络编号46000下的IMSI已经用完，所以虚拟了一个46002编号，134/159号段使用了此编号
@@ -265,8 +213,7 @@ public class MessageUtils {
 				list.add(mmscUrl_ct);
 				list.add(mmsProxy_ct);
 			}
-			//shouldChangeApn(context);
-			CLog.i("info", "apn :" + list);
+			// shouldChangeApn(context);
 			return list;
 		}
 		return null;
@@ -335,7 +282,6 @@ public class MessageUtils {
 			values.put("apn_id", id);
 			resolver.update(uri, values, null, null);
 		} catch (Exception e) {
-			CLog.i("info", "设置Apn失败，" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -401,10 +347,8 @@ public class MessageUtils {
 			HttpParams params = client.getParams();
 			HttpProtocolParams.setContentCharset(params, "UTF-8");
 			ConnRouteParams.setDefaultProxy(params, new HttpHost(mmsProxy, 80));
-			CLog.i("info", "开始请求 ");
 			HttpResponse response = client.execute(target, post);
 			StatusLine status = response.getStatusLine();
-			CLog.i("info", "status : " + status.getStatusCode());
 			if (status.getStatusCode() != 200) {
 				throw new IOException("HTTP error: " + status.getReasonPhrase());
 			}
@@ -416,7 +360,6 @@ public class MessageUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			CLog.d("info", "彩信发送失败：" + e.getMessage());
 			// 发送失败处理
 		}
 		return false;
@@ -437,92 +380,92 @@ public class MessageUtils {
 	 * @param audioPath
 	 *            音频路径
 	 */
-	public static void send(final Context context, String phone,
-			String subject, String text, String imagePath, String audioPath) {
-		CLog.i("MmsTestActivity", "测试彩信" + subject);
-
-		SendReq sendRequest = new SendReq();
-		EncodedStringValue[] sub = EncodedStringValue.extract(subject);
-		if (sub != null && sub.length > 0) {
-			sendRequest.setSubject(sub[0]);
-		}
-		EncodedStringValue[] phoneNumbers = EncodedStringValue.extract(phone);
-		if (phoneNumbers != null && phoneNumbers.length > 0) {
-			sendRequest.addTo(phoneNumbers[0]);
-		}
-		PduBody pduBody = new PduBody();
-		if (!TextUtils.isEmpty(text)) {
-			PduPart partPdu3 = new PduPart();
-			partPdu3.setCharset(CharacterSets.UTF_8);
-			partPdu3.setName("mms_text.txt".getBytes());
-			partPdu3.setContentType("text/plain".getBytes());
-			partPdu3.setData(text.getBytes());
-			pduBody.addPart(partPdu3);
-		}
-		if (!TextUtils.isEmpty(imagePath)) {
-			PduPart partPdu = new PduPart();
-			partPdu.setCharset(CharacterSets.UTF_8);
-			partPdu.setName("camera.jpg".getBytes());
-			partPdu.setContentType("image/png".getBytes());
-			partPdu.setDataUri(Uri
-					.parse("http://up.2cto.com/2012/0414/20120414101424728.jpg"));
-			partPdu.setDataUri(Uri.fromFile(new File(imagePath)));
-			pduBody.addPart(partPdu);
-		}
-		if (!TextUtils.isEmpty(audioPath)) {
-			PduPart partPdu2 = new PduPart();
-			partPdu2.setCharset(CharacterSets.UTF_8);
-			partPdu2.setName("speech_test.amr".getBytes());
-			partPdu2.setContentType("audio/amr".getBytes());
-			// partPdu2.setContentType("audio/amr-wb".getBytes());
-			//
-			partPdu2.setDataUri(Uri
-					.parse("file://mnt//sdcard//.lv//audio//1326786209801.amr"));
-			partPdu2.setDataUri(Uri.fromFile(new File(audioPath)));
-			pduBody.addPart(partPdu2);
-		}
-
-		sendRequest.setBody(pduBody);
-		final PduComposer composer = new PduComposer(context, sendRequest);
-		final byte[] bytesToSend = composer.make();
-		final List<String> list = getSimMNC(context);
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// 因为在切换apn过程中需要一定时间，所以需要加上一个重试操作
-				int retry = 0;
-				while (retry < 5) {
-					CLog.d("info", "重试次数：" + (retry + 1));
-					retry++;
-					try {
-						if (sendMMMS(list, context, bytesToSend)) {
-							myHandler.post(new Runnable() {
-
-								@Override
-								public void run() {
-									Toast.makeText(context, "彩信发送成功！",
-											Toast.LENGTH_LONG).show();
-								}
-							});
-							return;
-						}
-						Thread.sleep(2000);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				myHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(context, "彩信发送失败！", Toast.LENGTH_LONG)
-								.show();
-					}
-				});
-			}
-		});
-		t.start();
-
-	}
+	// public static void send(final Context context, String phone,
+	// String subject, String text, String imagePath, String audioPath) {
+	// CLog.i("MmsTestActivity", "测试彩信" + subject);
+	//
+	// SendReq sendRequest = new SendReq();
+	// EncodedStringValue[] sub = EncodedStringValue.extract(subject);
+	// if (sub != null && sub.length > 0) {
+	// sendRequest.setSubject(sub[0]);
+	// }
+	// EncodedStringValue[] phoneNumbers = EncodedStringValue.extract(phone);
+	// if (phoneNumbers != null && phoneNumbers.length > 0) {
+	// sendRequest.addTo(phoneNumbers[0]);
+	// }
+	// PduBody pduBody = new PduBody();
+	// if (!TextUtils.isEmpty(text)) {
+	// PduPart partPdu3 = new PduPart();
+	// partPdu3.setCharset(CharacterSets.UTF_8);
+	// partPdu3.setName("mms_text.txt".getBytes());
+	// partPdu3.setContentType("text/plain".getBytes());
+	// partPdu3.setData(text.getBytes());
+	// pduBody.addPart(partPdu3);
+	// }
+	// if (!TextUtils.isEmpty(imagePath)) {
+	// PduPart partPdu = new PduPart();
+	// partPdu.setCharset(CharacterSets.UTF_8);
+	// partPdu.setName("camera.jpg".getBytes());
+	// partPdu.setContentType("image/png".getBytes());
+	// partPdu.setDataUri(Uri
+	// .parse("http://up.2cto.com/2012/0414/20120414101424728.jpg"));
+	// partPdu.setDataUri(Uri.fromFile(new File(imagePath)));
+	// pduBody.addPart(partPdu);
+	// }
+	// if (!TextUtils.isEmpty(audioPath)) {
+	// PduPart partPdu2 = new PduPart();
+	// partPdu2.setCharset(CharacterSets.UTF_8);
+	// partPdu2.setName("speech_test.amr".getBytes());
+	// partPdu2.setContentType("audio/amr".getBytes());
+	// // partPdu2.setContentType("audio/amr-wb".getBytes());
+	// //
+	// partPdu2.setDataUri(Uri
+	// .parse("file://mnt//sdcard//.lv//audio//1326786209801.amr"));
+	// partPdu2.setDataUri(Uri.fromFile(new File(audioPath)));
+	// pduBody.addPart(partPdu2);
+	// }
+	//
+	// sendRequest.setBody(pduBody);
+	// final PduComposer composer = new PduComposer(context, sendRequest);
+	// final byte[] bytesToSend = composer.make();
+	// final List<String> list = getSimMNC(context);
+	// Thread t = new Thread(new Runnable() {
+	// @Override
+	// public void run() {
+	// // 因为在切换apn过程中需要一定时间，所以需要加上一个重试操作
+	// int retry = 0;
+	// while (retry < 5) {
+	// CLog.d("info", "重试次数：" + (retry + 1));
+	// retry++;
+	// try {
+	// if (sendMMMS(list, context, bytesToSend)) {
+	// myHandler.post(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// Toast.makeText(context, "彩信发送成功！",
+	// Toast.LENGTH_LONG).show();
+	// }
+	// });
+	// return;
+	// }
+	// Thread.sleep(2000);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// myHandler.post(new Runnable() {
+	// @Override
+	// public void run() {
+	// Toast.makeText(context, "彩信发送失败！", Toast.LENGTH_LONG)
+	// .show();
+	// }
+	// });
+	// }
+	// });
+	// t.start();
+	//
+	// }
 
 	/**
 	 * 发送音频彩信
@@ -539,7 +482,6 @@ public class MessageUtils {
 	 */
 	public boolean send(final Context context, String phone, String subject,
 			String text, String audioPath) {
-		CLog.i("MmsTestActivity", "测试彩信" + subject);
 
 		SendReq sendRequest = new SendReq();
 		EncodedStringValue[] sub = EncodedStringValue.extract(subject);
@@ -577,7 +519,6 @@ public class MessageUtils {
 				// 因为在切换apn过程中需要一定时间，所以需要加上一个重试操作
 				int retry = 0;
 				do {
-					CLog.d("info", "重试次数：" + (retry + 1));
 					try {
 						isSend = sendMMMS(list, context, bytesToSend);
 						// Thread.sleep(2000);

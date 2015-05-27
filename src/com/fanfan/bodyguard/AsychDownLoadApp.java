@@ -119,7 +119,6 @@ public class AsychDownLoadApp extends AsyncTask<String, Integer, Boolean> {
 				fileOut.close();
 				in.close();
 				if (downloadedSize == totalSize) {
-					CLog.i("info", "下载完成，大小一致");
 					return true;
 				}
 			} else {
@@ -144,7 +143,6 @@ public class AsychDownLoadApp extends AsyncTask<String, Integer, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
-			CLog.i("info", "下载完成，开始安装");
 			builder.setContentTitle("下载成功");
 			manager.notify(NOTIFICTION_ID, notification);
 			// 取消通知

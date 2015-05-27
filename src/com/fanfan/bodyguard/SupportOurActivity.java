@@ -40,7 +40,7 @@ public class SupportOurActivity extends BaseActivity implements OnClickListener 
 		try {
 			String name = manager.getPackageInfo(this.getPackageName(), 0).versionName;
 			if (!TextUtils.isEmpty(name)) {
-				tv_version.setText("Ã˘…ÌŒ¿ ø V" + name);
+				tv_version.setText(getString(R.string.app_name_version) + name);
 			}
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();

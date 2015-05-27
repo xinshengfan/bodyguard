@@ -13,7 +13,6 @@ import android.provider.ContactsContract.RawContacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.text.TextUtils;
 
-import com.fanfan.utils.CLog;
 import com.fanfan.utils.SharePreferUtils;
 
 /**
@@ -108,7 +107,6 @@ public class ContactsUtils {
 		phoneCursor.close();
 		// 保存选中的号码到本地
 		mSharePreferUtils.setStringSetPrefer(KEY_SAVED_PHONE, save_phone_set);
-		CLog.i("info", "size:" + arrayList.size());
 		return arrayList;
 	}
 }

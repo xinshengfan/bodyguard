@@ -168,7 +168,6 @@ public class SetGesureLockActivity extends BaseActivity implements
 
 	private void judgeFristLock(String first, String second, List<Cell> pattern) {
 		if (TextUtils.isEmpty(first) || TextUtils.isEmpty(second)) {
-			CLog.i("info", "lock is null first:" + first + " ,second:" + second);
 			return;
 		}
 		if (first.equals(second)) {

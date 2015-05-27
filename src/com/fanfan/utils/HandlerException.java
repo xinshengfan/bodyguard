@@ -60,7 +60,6 @@ public class HandlerException implements UncaughtExceptionHandler {
 			new Thread() {
 				public void run() {
 					Looper.prepare();
-					CLog.i("info", "******* 1 ********");
 					Toast.makeText(context, "程序崩溃了，请重新启动", Toast.LENGTH_LONG)
 							.show();
 					Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -99,7 +98,6 @@ public class HandlerException implements UncaughtExceptionHandler {
 			public void run() {
 				// 创建文件名
 				String fileName = "Body_LOG_" + getCurrentData();
-				CLog.i("info", "创建异常信息文件");
 				File file = createLogFile(fileName);
 				try {
 					FileOutputStream fos = new FileOutputStream(file, true);
@@ -165,7 +163,6 @@ public class HandlerException implements UncaughtExceptionHandler {
 	}
 
 	protected File createLogFile(String fileName) {
-		CLog.i("info", "创建日志文件");
 		File logFile = null;
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
@@ -184,7 +181,6 @@ public class HandlerException implements UncaughtExceptionHandler {
 				try {
 					logFile.createNewFile();
 				} catch (IOException e) {
-					CLog.i(TAG, e.getMessage());
 					e.printStackTrace();
 				}
 			} else {

@@ -293,7 +293,7 @@
                     android:includeFontPadding="false" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/rela_select_ring"
                 android:layout_width="match_parent"
                 android:layout_height="50dip"
@@ -301,30 +301,30 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_select_ring_solid"
                 android:onClick="onClick"
+                android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tv_ring_name"
+                    style="@style/ListItemTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="1.0"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/selectmusicname"
+                    android:textColor="@color/fanfan_red" />
 
                 <ImageButton
                     android:id="@+id/imb_ring_play"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="17dip"
                     android:background="@drawable/ic_play_press" />
-
-                <TextView
-                    android:id="@+id/tv_ring_name"
-                    style="@style/ListItemTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dip"
-                    android:text="@string/selectmusicname"
-                    android:textColor="@color/fanfan_red" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/setting_say_peace"

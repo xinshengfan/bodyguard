@@ -24,7 +24,7 @@
 
             <TextView
                 style="@style/TitleStyle"
-                android:text="@string/str_set_title" />
+                android:text="@string/support" />
         </RelativeLayout>
 
         <LinearLayout

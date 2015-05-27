@@ -51,7 +51,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 	private TextView tv_recordtime, tv_ring_name;
 	private SlipSwitchView useRecord_switch, playvoice_switch, saypaece_switch,
 			opengps_swtich;
-	private RelativeLayout rela_set_peaceontime, rela_select_ring;
+	private RelativeLayout rela_set_peaceontime;
+	private LinearLayout rela_select_ring;
 	private ImageButton imb_ring_play;
 	private SharePreferUtils preferUtils;
 	private final String KEY_KEY = "shortcutKey";
@@ -101,7 +102,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		saypaece_switch = (SlipSwitchView) findViewById(R.id.setting_switch_say_peace);
 		opengps_swtich = (SlipSwitchView) findViewById(R.id.setting_open_gps);
 		rela_set_peaceontime = (RelativeLayout) findViewById(R.id.rela_set_peaceontime);
-		rela_select_ring = (RelativeLayout) findViewById(R.id.rela_select_ring);
+		rela_select_ring = (LinearLayout) findViewById(R.id.rela_select_ring);
 		imb_ring_play = (ImageButton) findViewById(R.id.imb_ring_play);
 		tv_ring_name = (TextView) findViewById(R.id.tv_ring_name);
 		useRecord_switch.setOnSwitchListener(this);
@@ -264,7 +265,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 			isPlaying = true;
 			imb_ring_play.setBackgroundResource(R.drawable.ic_stop_press);
 		}
-		CLog.i("info", "发送的广播:" + intent.getAction());
 		sendBroadcast(intent);
 	}
 
@@ -323,14 +323,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 	public void onSwitched(View view, boolean isSwitchOn) {
 		switch (view.getId()) {
 		case R.id.setting_slipview_userecord:
-			CLog.i("info", "是否启用录音：" + isSwitchOn);
 			preferUtils.setBooleanPrefer(G.KEY_USE_RECORD, isSwitchOn);
 			if (isSwitchOn) {
 				openDialogSetLength();
 			}
 			break;
 		case R.id.setting_play_voice:
-			CLog.i("info", "是否播放铃音：" + isSwitchOn);
 			preferUtils.setBooleanPrefer(G.KEY_PLAY_RING, isSwitchOn);
 			if (isSwitchOn) {
 				// 启动播放音乐服务
@@ -338,14 +336,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 						MusicPlayService.class));
 				openDialogSetRing();
 			} else {
-				CLog.i("info", "隐藏条目，关闭服务");
 				rela_select_ring.setVisibility(View.GONE);
 				sendBroadcast(new Intent(G.ACTION_PAUSE));
 				// sendBroadcast(new Intent(G.ACTION_EXIT));
 			}
 			break;
 		case R.id.setting_switch_say_peace:
-			CLog.i("info", "是否定时报平安：" + isSwitchOn);
 			preferUtils.setBooleanPrefer(G.KEY_PEACE_ONTIME, isSwitchOn);
 			if (isSwitchOn) {
 				rela_set_peaceontime.setVisibility(View.VISIBLE);
@@ -354,7 +350,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 			}
 			break;
 		case R.id.setting_open_gps:
-			CLog.i("info", "是否打开GPS：" + isSwitchOn);
 			Intent intent = new Intent();
 			intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 			try {
@@ -414,7 +409,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		} else {
 			if (G.VALUE_SYSTEM_RING.equals(preferUtils
 					.getStringPrefer(G.KEY_RING_TYPE))) {
-				// 还要根据保存的不同的值进行处理，好烦
+				// 还要根据保存的不同的值进行处理
 				btn_system_ring
 						.setBackgroundResource(R.drawable.btn_music_pressed);
 				btn_media_ring
@@ -619,7 +614,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			CLog.i("info", "onKeyDown");
 			sendBroadcast(new Intent(G.ACTION_EXIT));
 			isFront = false;
 			onBackPressed();

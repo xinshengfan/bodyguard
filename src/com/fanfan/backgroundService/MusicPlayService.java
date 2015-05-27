@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.Ringtone;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -48,22 +49,24 @@ public class MusicPlayService extends Service {
 			} else if (G.ACTION_PAUSE.equals(action)) {
 				pause();
 			} else if (G.ACTION_EXIT.equals(action)) {
+				gc();
 				stopSelf();
 			} else if (G.ACTION_PLAY_ITEM_RING.equals(action)) {
 				// 先停止后播放
 				pause();
+				gc();
 				isPause = false;
-				ringtone = null;
-				player = null;
 				play();
 			}
 		}
 	}
+	
+	
 
 	public void play() {
+		// 播放前先清缓存
 		ring_type = preferUtils.getStringPrefer(G.KEY_RING_TYPE);
 		// 是否处于暂停状态
-		Log.i("info", "播放音乐：ring_type:" + ring_type);
 		if (ring_type.equals(G.VALUE_SYSTEM_RING)) {
 			// 是系统铃音
 			String id_str = preferUtils.getStringPrefer(G.KEY_RING_PATH);
@@ -71,7 +74,8 @@ public class MusicPlayService extends Service {
 				int id = Integer.parseInt(id_str);
 				SystemRingUtils utils = new SystemRingUtils(
 						MusicPlayService.this);
-				ringtone = utils.getRingtoneById(id);
+				Uri toneUri = utils.getRingtoneUriById(id);
+				ringtone = utils.getRingtone(toneUri);
 				admanager.setStreamVolume(AudioManager.STREAM_RING,
 						admanager.getStreamMaxVolume(AudioManager.STREAM_RING),
 						0);
@@ -82,6 +86,8 @@ public class MusicPlayService extends Service {
 					if (SettingActivity.isFront) {
 						SettingActivity.getInstance().setPauseBtnBackground();
 					}
+				} else {
+					CLog.i("info", "没有找到ringtone");
 				}
 			}
 		} else if (ring_type.equals(G.VALUE_MEDIA_RING)) {
@@ -139,11 +145,22 @@ public class MusicPlayService extends Service {
 		}
 	}
 
+	public void gc() {
+		if (ringtone != null) {
+			ringtone.stop();
+			ringtone = null;
+		}
+		if (player != null) {
+			player.release();
+			player = null;
+		}
+		System.gc();
+	}
+
 	public void pause() {
 		ring_type = preferUtils.getStringPrefer(G.KEY_RING_TYPE);
 		if (ring_type.equals(G.VALUE_SYSTEM_RING)) {
 			if (ringtone != null && ringtone.isPlaying()) {
-				CLog.i("info", "系统铃音媒体暂停");
 				ringtone.stop();
 				isPause = true;
 				if (SettingActivity.isFront) {
@@ -152,7 +169,6 @@ public class MusicPlayService extends Service {
 			}
 		} else if (ring_type.equals(G.VALUE_MEDIA_RING)) {
 			if (player != null && player.isPlaying()) {
-				CLog.i("info", "媒体暂停");
 				player.pause();
 				isPause = true;
 				if (SettingActivity.isFront) {
@@ -203,7 +219,7 @@ public class MusicPlayService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		return super.onStartCommand(intent, flags, startId);
 	}
-
+ 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

@@ -53,8 +53,7 @@ public class RootUtils {
 				return false;
 			}
 		} catch (Exception e) {
-			CLog.d("*** DEBUG ***", "Unexpected error - Here is what I know: "
-					+ e.getMessage());
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {

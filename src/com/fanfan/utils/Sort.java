@@ -162,15 +162,12 @@ public class Sort {
 		for (int i = 0; i < length; i++) {
 			headchar = String.valueOf(getPinYinHeadChar(strArr.get(i)))
 					.substring(0, 1).toUpperCase(Locale.CHINA);
-			CLog.i("info", "headchar:" + headchar);
 			if (!list.contains(headchar)) {
-				CLog.i("info", "Ìí¼ÓµÄheader:" + headchar);
 				list.add(headchar);
 				list.add(strArr.get(i));
 			} else {
 				list.add(strArr.get(i));
 			}
-			CLog.i("info", "for list size:" + list.size());
 		}
 		return list;
 	}

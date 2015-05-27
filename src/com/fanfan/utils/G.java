@@ -66,5 +66,7 @@ public class G {
 	public static final String VALUE_SYSTEM_RING = "valuesystemring";
 	public static final String VALUE_MEDIA_RING = "valuemediaring";
 	public static final String KEY_RING_NAME = "keyRingName"; // ±£¥Ê√ΩÃÂ√˚
+	
+	public static final String KEY_SEND_IMMETIATELLY = "keysendsmsimmediately";
 
 }
